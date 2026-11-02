@@ -14,7 +14,7 @@ const tools = [
   {
     id: 'counter',
     path: '/word-counter',
-    name: 'Book, Essay & Manuscript Word Counter',
+    name: 'Word & Character Counter',
     seoTitle: 'Free Online Word Counter & Manuscript Word Count Tool | Wordflow',
     metaDescription: 'Accurately count words, characters, and paragraphs for books, essays, novels, and articles. A free online word counter designed for students, authors, and writers.',
     description: 'Count words, characters, and paragraphs for books, essays, and articles.',
@@ -28,7 +28,7 @@ const tools = [
   {
     id: 'cleaner',
     path: '/text-cleaner',
-    name: 'Blogger & Writer Bulk Text Cleaner',
+    name: 'Bulk Text Cleaner',
     seoTitle: 'Free Online Bulk Text Cleaner & Space Remover for Writers | Wordflow',
     metaDescription: 'Clean messy text instantly. Remove extra spaces and format copied notes, drafts, or emails for blogs, essays, and newsletters with a single click.',
     description: 'Remove clutter, normalize spacing, and tidy up blog posts or drafts.',
@@ -42,7 +42,7 @@ const tools = [
   {
     id: 'duplicates',
     path: '/remove-duplicate-lines',
-    name: 'Student & Researcher Duplicate Line Remover',
+    name: 'Duplicate Line Remover',
     seoTitle: 'Remove Duplicate Lines Online — Free Data & List Cleaner | Wordflow',
     metaDescription: 'Quickly find and delete duplicate lines from research lists, study notes, or data sets. Fast, free, and private browser-based text deduplication.',
     description: 'Find and remove repeated lines from lists and research notes.',
@@ -56,7 +56,7 @@ const tools = [
   {
     id: 'case',
     path: '/text-case-converter',
-    name: 'Content Writer Text Case Converter',
+    name: 'Text Case Converter',
     seoTitle: 'Online Text Case Converter — Uppercase, Title Case & More | Wordflow',
     metaDescription: 'Easily convert text between Title Case, uppercase, lowercase, and sentence case instantly online. Perfect for bloggers, students, and copywriters.',
     description: 'Switch between sentence, title, upper, and lowercase styles.',
@@ -69,7 +69,7 @@ const tools = [
   {
     id: 'diff',
     path: '/text-diff-checker',
-    name: 'Editor & Student Text Diff Checker',
+    name: 'Text Difference Checker',
     seoTitle: 'Online Text Comparison Tool — Compare Drafts & Essays | Wordflow',
     metaDescription: 'Compare two versions of an essay, article, or code block side by side. Instantly highlight changes for editors, students, and writers.',
     description: 'Compare two pieces of text and spot edits or changes instantly.',
@@ -82,7 +82,7 @@ const tools = [
   {
     id: 'reading',
     path: '/reading-time-calculator',
-    name: 'Blog & Manuscript Reading Time Calculator',
+    name: 'Reading Time Calculator',
     seoTitle: 'Reading Time Calculator — Estimate Blog & Book Duration | Wordflow',
     metaDescription: 'Calculate how long a blog post, essay, or book manuscript takes to read. Free online tool for bloggers, teachers, and authors.',
     description: 'Estimate reading and speech time for articles and books.',
@@ -95,7 +95,7 @@ const tools = [
   {
     id: 'pdf',
     path: '/pdf-line-break-cleaner',
-    name: 'Academic Paper & PDF Line-Break Cleaner',
+    name: 'PDF & Document Line-Break Cleaner',
     seoTitle: 'Remove Hard Line Breaks from Academic PDFs & Documents | Wordflow',
     metaDescription: 'Fix awkward line breaks copied from academic papers, e-books, or PDF documents. Clean paragraphs smoothly for students and researchers.',
     description: 'Import PDF papers and repair awkward line breaks.',
@@ -108,7 +108,7 @@ const tools = [
   {
     id: 'social',
     path: '/social-media-character-counter',
-    name: 'Blogger & Social Media Text Checker',
+    name: 'Social Media Text Checker',
     seoTitle: 'Social Media Character Counter & Platform Limits Tool | Wordflow',
     metaDescription: 'Check post lengths against character limits for X, Instagram, LinkedIn, and Facebook. Perfect for social media managers and bloggers.',
     description: 'Check post length against common platform limits.',
