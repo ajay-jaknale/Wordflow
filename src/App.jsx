@@ -295,37 +295,54 @@ function EmptyState({ text = 'Your result will appear here.' }) {
 }
 
 function AdContainer() {
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
+
   return (
     <div style={{
       marginTop: '40px',
       marginBottom: '20px',
-      minHeight: '100px',
       width: '100%',
+      height: '95px',
       backgroundColor: 'var(--surface-2)',
       border: '1px solid var(--line)',
       borderRadius: '12px',
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
       boxShadow: 'var(--shadow)',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      padding: '8px 16px',
+      boxSizing: 'border-box'
     }}>
       <span style={{
         fontFamily: 'Manrope, sans-serif',
-        fontSize: '14px',
+        fontSize: '9px',
         fontWeight: '700',
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
         color: 'var(--muted)',
         opacity: 0.6,
-        background: 'var(--surface-solid)',
-        padding: '6px 16px',
-        borderRadius: '8px',
-        border: '1px solid var(--line)'
+        marginBottom: '4px',
+        lineHeight: '1'
       }}>
-        Ad
+        Advertisement
       </span>
+      <div style={{ width: '100%', height: '60px', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <ins className="adsbygoogle"
+             style={{ display: 'inline-block', width: '100%', height: '60px' }}
+             data-ad-client="ca-pub-4514134309099083"
+             data-ad-slot="YOUR_AD_SLOT_ID"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+      </div>
     </div>
   )
 }
