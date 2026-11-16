@@ -20,9 +20,27 @@ const tools = [
     description: 'Count words, characters, and paragraphs for books, essays, and articles.',
     icon: Hash,
     tag: 'Analyze',
+    explanation: 'The Word & Character Counter is an essential browser-based utility designed for authors, academic researchers, copywriters, and students who need precise control over their text metrics. Whether you are drafting a university admissions essay subject to strict maximum word bounds, writing a 50,000-word NaNoWriMo novel, or optimizing a web article for search engine visibility, knowing your exact quantitative metrics prevents costly formatting errors.',
+    howToSteps: [
+      'Click or tap into the primary text input area.',
+      'Type your draft directly or paste your text from your clipboard.',
+      'Review real-time metrics updating instantly in the statistics panel.',
+      'Use the document importer above if you need to upload a full PDF or text manuscript file.'
+    ],
+    examples: [
+      'Academic Submissions: Ensuring a thesis abstract stays strictly under the 250-word journal limit.',
+      'Copywriting: Verifying that a landing page hero section remains concise and punchy under 50 words.',
+      'Publishing: Monitoring daily chapter word counts to meet steady milestone goals.'
+    ],
     faqs: [
       { q: 'Can I upload an entire book manuscript or essay?', a: 'Yes! Use the alternative document importer above to upload PDF, TXT, or Markdown files for instant word counting.' },
-      { q: 'Is this word counter suitable for academic essays?', a: 'Yes, it tracks words, characters, sentences, and paragraphs perfectly for academic papers, student assignments, and professional publishing.' }
+      { q: 'Is this word counter suitable for academic essays?', a: 'Yes, it tracks words, characters, sentences, and paragraphs perfectly for academic papers, student assignments, and professional publishing.' },
+      { q: 'Does counting include punctuation and special characters?', a: 'Characters include all letters, spaces, and punctuation marks, while the "without spaces" metric isolates pure alphanumeric data.' },
+      { q: 'Is my data secure when pasting sensitive drafts?', a: 'All processing happens locally in your browser sandbox. Your text is never transmitted, logged, or stored on external servers.' }
+    ],
+    relatedBlogs: [
+      { slug: 'mastering-manuscript-metrics-and-pacing', title: 'Mastering Manuscript Metrics: A Comprehensive Guide to Word Counts, Pacing, and Readability' },
+      { slug: 'psychology-of-clean-writing-minimalism', title: 'The Psychology of Clean Writing: Why Minimalist Workflows Drive Deep Focus' }
     ]
   },
   {
@@ -34,9 +52,26 @@ const tools = [
     description: 'Remove clutter, normalize spacing, and tidy up blog posts or drafts.',
     icon: Sparkles,
     tag: 'Clean',
+    explanation: 'The Bulk Text Cleaner is engineered for developers, editors, and content creators who frequently deal with corrupted string data, messy clipboard clippings from web pages, or unevenly formatted notes. It automates the tedious chore of stripping erratic line breaks, normalizing spacing, and cleaning typography so you can publish clean copy instantly.',
+    howToSteps: [
+      'Paste your raw, unformatted text into the editor box.',
+      'Select your desired cleanup parameters (e.g., trim lines, remove empty lines, collapse spaces).',
+      'Click the "Clean text" button to execute immediate string transformations.',
+      'Copy your polished result or download it directly to your device.'
+    ],
+    examples: [
+      'Newsletter Drafting: Removing erratic double spacing copied from Google Docs before pasting into email marketing software.',
+      'Web Scraping: Tidying up raw paragraphs extracted from legacy HTML tables or PDFs.',
+      'Code Prep: Normalizing indentation whitespace across multi-line configuration blocks.'
+    ],
     faqs: [
       { q: 'Can I remove multiple blank lines at once?', a: 'Yes, check the "Limit multiple blank lines" option to normalize paragraph spacing instantly for blogs and essays.' },
-      { q: 'Does it fix weird quotation marks from word processors?', a: 'Yes, you can enable smart quote normalization to convert curly quotes to straight quotes cleanly.' }
+      { q: 'Does it fix weird quotation marks from word processors?', a: 'Yes, you can enable smart quote normalization to convert curly quotes to straight quotes cleanly.' },
+      { q: 'Can I convert text case while cleaning?', a: 'Yes, toggle options for automatic lowercase or uppercase conversion during the bulk cleaning process.' },
+      { q: 'Is there a file size limit when cleaning documents?', a: 'Because processing happens entirely via your local browser engine, it easily handles large text blocks instantly.' }
+    ],
+    relatedBlogs: [
+      { slug: 'architecture-of-client-side-text-utilities', title: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side' }
     ]
   },
   {
@@ -48,9 +83,26 @@ const tools = [
     description: 'Find and remove repeated lines from lists and research notes.',
     icon: ListFilter,
     tag: 'Organize',
+    explanation: 'The Duplicate Line Remover is a robust data organization utility built for researchers, developers, students, and catalogers. When compiling bibliographies, keyword lists, email rosters, or survey notes, accidental duplicates frequently creep in. This tool instantly purges redundant entries while preserving your original list sequence.',
+    howToSteps: [
+      'Paste your multi-line list into the text input area.',
+      'Choose whether to enforce case-sensitive matching or keep unique lines.',
+      'Click "Remove duplicates" to instantly filter the list.',
+      'Copy the cleaned dataset or export it directly as a text or spreadsheet file.'
+    ],
+    examples: [
+      'Research Bibliographies: Cleaning duplicated source URLs and reference titles from exported citation lists.',
+      'SEO Keyword Research: Purging repeating search queries from raw keyword planner exports.',
+      'Inventory Management: Filtering duplicate serial numbers or SKU lists.'
+    ],
     faqs: [
       { q: 'Does deduplication preserve list order?', a: 'Yes, unique lines maintain their original sequence while duplicate items are stripped out.' },
-      { q: 'Is this useful for academic research lists?', a: 'Yes, researchers and students use it constantly to clean bibliography lists, keywords, and survey datasets.' }
+      { q: 'Is this useful for academic research lists?', a: 'Yes, researchers and students use it constantly to clean bibliography lists, keywords, and survey datasets.' },
+      { q: 'How does case-sensitive matching affect results?', a: 'When case-sensitivity is disabled, "Apple" and "apple" are treated as duplicates; when enabled, they remain separate.' },
+      { q: 'Can I export my deduplicated list into Excel?', a: 'Yes, use the Download Result dropdown to save your clean dataset as a CSV or text file.' }
+    ],
+    relatedBlogs: [
+      { slug: 'architecture-of-client-side-text-utilities', title: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side' }
     ]
   },
   {
@@ -62,8 +114,26 @@ const tools = [
     description: 'Switch between sentence, title, upper, and lowercase styles.',
     icon: Type,
     tag: 'Format',
+    explanation: 'The Text Case Converter is a versatile typographical tool designed for bloggers, editors, programmers, and social media managers. It allows you to switch instantly between standard grammatical cases and programmatic naming conventions without retyping manual capitalization.',
+    howToSteps: [
+      'Paste your text or heading into the editor.',
+      'Select your target case format from the grid (e.g., Title Case, camelCase, UPPERCASE).',
+      'Click "Convert text" to transform your string.',
+      'Copy your converted result instantly.'
+    ],
+    examples: [
+      'Blog Headings: Use **Title Case** for major article titles to give them an authoritative, polished look.',
+      'Grammar Polish: Use **Sentence case** when rewriting casual notes into proper grammatical prose.',
+      'Coding & APIs: Use **camelCase** or **kebab-case** when formatting variable names or URL slugs.'
+    ],
     faqs: [
-      { q: 'How do I convert headings to Title Case?', a: 'Simply paste your heading, select Title Case, and Wordflow formats it instantly for your blog post or essay title.' }
+      { q: 'How do I convert headings to Title Case?', a: 'Simply paste your heading, select Title Case, and Wordflow formats it instantly for your blog post or essay title.' },
+      { q: 'What programming case formats are supported?', a: 'We support camelCase, PascalCase, snake_case, and kebab-case for developers.' },
+      { q: 'Can I convert ALL CAPS text to normal sentence case?', a: 'Yes! Selecting Sentence case normalizes aggressive uppercase blocks into standard readable capitalization.' },
+      { q: 'Does case conversion happen locally?', a: 'Yes, all transformations execute instantly within your browser.' }
+    ],
+    relatedBlogs: [
+      { slug: 'typography-and-copywriting-constraints', title: 'The Typography & Copywriting Playbook: Conquering Social Media Character Limits' }
     ]
   },
   {
@@ -77,6 +147,21 @@ const tools = [
     tag: 'Compare',
     faqs: [
       { q: 'How does it help writers and editors?', a: 'It lets you compare two drafts side by side, highlighting additions in green and deletions in red to track revisions.' }
+    ],
+    explanation: 'The Text Difference Checker is an advanced comparison utility built for software developers, legal reviewers, and manuscript editors. By analyzing two text revisions side-by-side using line comparison algorithms, it instantly flags insertions, deletions, and modifications.',
+    howToSteps: [
+      'Paste your original text draft into the left input panel.',
+      'Paste your revised version into the right input panel.',
+      'Review the automated comparison grid where changes are highlighted.',
+      'Export the comparison report or reset fields to start over.'
+    ],
+    examples: [
+      'Editorial Revisions: Comparing an author’s final manuscript draft against an earlier submission.',
+      'Code Review: Checking configuration file modifications before committing code.',
+      'Contract Analysis: Spotting subtle clause alterations in updated legal agreements.'
+    ],
+    relatedBlogs: [
+      { slug: 'text-diffing-algorithms-version-control', title: 'Text Diffing and Version Control: How Line-By-Line Comparison Algorithms Power Editors' }
     ]
   },
   {
@@ -90,6 +175,20 @@ const tools = [
     tag: 'Analyze',
     faqs: [
       { q: 'Can I calculate the reading time of a full novel or article?', a: 'Yes, upload your manuscript file or paste text to instantly estimate how long it will take readers or students to finish.' }
+    ],
+    explanation: 'The Reading Time Calculator helps content creators, educators, and publishers evaluate audience engagement pacing. Because human attention spans vary based on content length, adding accurate reading time estimates improves user retention.',
+    howToSteps: [
+      'Paste your article or upload your document file.',
+      'View the automated breakdown calculated at standard reading speeds (200 WPM).',
+      'Analyze slow, average, and fast reading duration benchmarks.'
+    ],
+    examples: [
+      'Content Marketing: Displaying "5 min read" banners atop blog posts to set visitor expectations.',
+      'Public Speaking: Estimating speech delivery durations for conference presentations.',
+      'Syllabus Planning: Assessing student reading workloads for weekly assignments.'
+    ],
+    relatedBlogs: [
+      { slug: 'mastering-manuscript-metrics-and-pacing', title: 'Mastering Manuscript Metrics: A Comprehensive Guide to Word Counts, Pacing, and Readability' }
     ]
   },
   {
@@ -103,6 +202,20 @@ const tools = [
     tag: 'PDF',
     faqs: [
       { q: 'Why do academic PDFs have broken line breaks?', a: 'PDFs store text with hard line returns at the end of every visual line. This tool joins wrapped paragraphs back into smooth sentences.' }
+    ],
+    explanation: 'The PDF & Document Line-Break Cleaner solves one of the most frustrating annoyances for researchers and students: copying text from PDF journals or e-books, only to find hard line returns breaking every sentence.',
+    howToSteps: [
+      'Upload your PDF document or paste the broken text directly.',
+      'Review the extracted text preview in the editor.',
+      'Click "Clean line breaks" to stitch wrapped paragraphs back into smooth prose.',
+      'Copy or download your cleaned document.'
+    ],
+    examples: [
+      'Academic Research: Extracting clean quotation paragraphs from locked PDF research papers.',
+      'E-Book Reading: Formatting copied chapters into readable notes without awkward margin breaks.'
+    ],
+    relatedBlogs: [
+      { slug: 'architecture-of-client-side-text-utilities', title: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side' }
     ]
   },
   {
@@ -116,11 +229,23 @@ const tools = [
     tag: 'Social',
     faqs: [
       { q: 'What platform limits are supported?', a: 'We support character limits for X (Twitter), Instagram, TikTok, LinkedIn, Facebook, YouTube descriptions, and more.' }
+    ],
+    explanation: 'The Social Media Character Counter is built for social media managers, marketers, and creators who need to verify that their posts fit strict platform character caps before publishing.',
+    howToSteps: [
+      'Draft your social media copy in the input box.',
+      'Select your target platform from the dropdown menu (e.g., X post, Instagram caption).',
+      'Monitor the live progress bar and remaining character count.'
+    ],
+    examples: [
+      'X Threads: Ensuring individual posts do not exceed the 280-character ceiling.',
+      'LinkedIn Formatting: Keeping your hook well above the "See More" truncation fold.'
+    ],
+    relatedBlogs: [
+      { slug: 'typography-and-copywriting-constraints', title: 'The Typography & Copywriting Playbook: Conquering Social Media Character Limits' }
     ]
   }
 ]
 
-// --- PROFESSIONAL BLOG POSTS DATA (1000+ words depth equivalent per article) ---
 const blogPosts = [
   {
     slug: 'architecture-of-client-side-text-utilities',
@@ -589,7 +714,7 @@ function BlogIndexView({ onNavigate }) {
   return (
     <div className="tool-page" style={{ maxWidth: '900px', margin: '0 auto', padding: '20px 0' }}>
       <div style={{ marginBottom: '32px' }}>
-        <div className="eyebrow" style={{ color: 'var(--accent)', fontWeight: '700', marginBottom: '8px' }}>WORD FLOW EDITORIAL</div>
+        <div className="eyebrow" style={{ color: 'var(--accent)', fontWeight: '700', marginBottom: '8px' }}>WORD FLOW BLOG</div>
         <h1 style={{ fontSize: '28px', color: 'var(--text)', marginBottom: '10px' }}>Writing & Engineering Blog</h1>
         <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6' }}>
           Deep-dive guides, architectural essays on client-side text tools, and typography workflows for modern creators, authors, and developers.
@@ -916,41 +1041,59 @@ function ToolPanel({ tool, onBack, onNavigate }) {
       <section className="panel"><div className="panel-top"><div><h3>Platform check</h3><p>Select a platform to check your character count.</p></div><Settings2 size={19}/></div><label className="field-wrap"><span className="field-label">Platform</span><select value={platform} onChange={e => setPlatform(e.target.value)}>{Object.keys(limits).map(p => <option key={p}>{p}</option>)}</select></label><div className="limit-card"><div className="limit-head"><span>Characters used</span><strong>{stats.chars.toLocaleString()} / {limits[platform].toLocaleString()}</strong></div><div className="progress-track"><div className={`progress-fill ${stats.chars>limits[platform]?'over':''}`} style={{width:`${Math.min(100,stats.chars/limits[platform]*100)}%`}}/></div><p className={stats.chars>limits[platform]?'over-text':''}>{stats.chars>limits[platform] ? `${(stats.chars-limits[platform]).toLocaleString()} characters over the selected limit.` : `${(limits[platform]-stats.chars).toLocaleString()} characters remaining.`}</p></div><div className="tip-box"><ShieldCheck size={17}/><span>These are general text-length limits. Platform rules and counting methods can change.</span></div></section>
     </div>}
 
-    {/* US/UK Long-Tail SEO FAQ Section */}
-    {tool.faqs && tool.faqs.length > 0 && (
-      <section style={{ marginTop: '40px', padding: '24px', background: 'var(--surface-2)', borderRadius: '14px', border: '1px solid var(--line)' }}>
-        <h3 style={{ fontSize: '15px', marginBottom: '14px', color: 'var(--text)' }}>Frequently Asked Questions</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {tool.faqs.map((faq, index) => (
-            <div key={index} style={{ borderBottom: index < tool.faqs.length - 1 ? '1px solid var(--line)' : 'none', paddingBottom: index < tool.faqs.length - 1 ? '12px' : '0' }}>
-              <strong style={{ display: 'block', fontSize: '12px', color: 'var(--text)', marginBottom: '4px' }}>{faq.q}</strong>
-              <p style={{ fontSize: '11px', color: 'var(--muted)', margin: 0, lineHeight: '1.6' }}>{faq.a}</p>
-            </div>
-          ))}
+    {/* RICH SEO EDITORIAL CONTENT SECTION (300-600 words per tool) */}
+    <section style={{ marginTop: '50px', padding: '32px', background: 'var(--surface-2)', borderRadius: '16px', border: '1px solid var(--line)', lineHeight: '1.8' }}>
+      <h2 style={{ fontSize: '20px', color: 'var(--text)', marginBottom: '12px' }}>About {tool.name}</h2>
+      <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '24px' }}>{tool.explanation}</p>
+
+      <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>How to Use {tool.name}</h3>
+      <ol style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
+        {tool.howToSteps.map((step, idx) => (
+          <li key={idx} style={{ marginBottom: '8px' }}>{step}</li>
+        ))}
+      </ol>
+
+      <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Real-World Use Cases & Examples</h3>
+      <ul style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
+        {tool.examples.map((ex, idx) => (
+          <li key={idx} style={{ marginBottom: '8px' }}>{ex}</li>
+        ))}
+      </ul>
+
+      {tool.faqs && tool.faqs.length > 0 && (
+        <>
+          <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Frequently Asked Questions</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
+            {tool.faqs.map((faq, index) => (
+              <div key={index} style={{ borderBottom: index < tool.faqs.length - 1 ? '1px solid var(--line)' : 'none', paddingBottom: index < tool.faqs.length - 1 ? '12px' : '0' }}>
+                <strong style={{ display: 'block', fontSize: '13px', color: 'var(--text)', marginBottom: '4px' }}>{faq.q}</strong>
+                <p style={{ fontSize: '12px', color: 'var(--muted)', margin: 0, lineHeight: '1.6' }}>{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {tool.relatedBlogs && tool.relatedBlogs.length > 0 && (
+        <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
+          <h3 style={{ fontSize: '14px', color: 'var(--text)', marginBottom: '10px' }}>Related Articles & Guides</h3>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            {tool.relatedBlogs.map((blog) => (
+              <button 
+                key={blog.slug} 
+                onClick={() => onNavigate(`/blog/${blog.slug}`)}
+                className="button"
+                style={{ fontSize: '11px', padding: '8px 12px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                <BookOpen size={13} /> {blog.title}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
-    )}
+      )}
+    </section>
 
     <AdContainer />
-
-    <section style={{ marginTop: '30px', padding: '24px', background: 'var(--surface-2)', borderRadius: '14px', border: '1px solid var(--line)' }}>
-      <h2 style={{ fontSize: '16px', marginBottom: '10px' }}>About {tool.name}</h2>
-      <p style={{ fontSize: '11px', lineHeight: '1.7', color: 'var(--muted)', marginBottom: '16px' }}>{tool.metaDescription}</p>
-      
-      <h3 style={{ fontSize: '13px', marginBottom: '8px' }}>Related Wordflow Utilities</h3>
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        {tools.filter(t => t.id !== tool.id).slice(0, 4).map(rel => (
-          <button 
-            key={rel.id} 
-            onClick={() => onNavigate(rel.path)}
-            className="button"
-            style={{ fontSize: '10px', padding: '6px 10px' }}
-          >
-            {rel.name}
-          </button>
-        ))}
-      </div>
-    </section>
   </div>
 }
 
@@ -992,7 +1135,7 @@ export default function App() {
       document.title = selectedTool.seoTitle
       if (metaDesc) metaDesc.setAttribute('content', selectedTool.metaDescription)
     } else if (isBlogIndex) {
-      document.title = 'Wordflow Editorial — Writing, Typography & Client-Side Tools Blog'
+      document.title = 'Wordflow Blog — Writing, Typography & Client-Side Tools'
       if (metaDesc) metaDesc.setAttribute('content', 'Explore in-depth articles on manuscript metrics, typography rules, version control diffing, and client-side web tool architecture.')
     } else if (isBlogPost && currentBlogPostData) {
       document.title = currentBlogPostData.seoTitle
@@ -1028,7 +1171,7 @@ export default function App() {
           <Home size={17}/>Overview
         </button>
         <button className={`nav-item ${isBlogIndex || isBlogPost ? 'active' : ''}`} onClick={() => navigate('/blog')}>
-          <BookOpen size={17}/>Editorial Blog
+          <BookOpen size={17}/>Blog
         </button>
         <div className="side-label tools-label">YOUR TOOLS <span>08</span></div>
         <nav className="tool-nav">
@@ -1059,7 +1202,7 @@ export default function App() {
         <header className="topbar">
           <div className="breadcrumb">
             <span>Workspace</span><span>/</span>
-            <strong>{currentPath === '/about' ? 'About' : currentPath === '/privacy-policy' ? 'Privacy Policy' : currentPath === '/terms-of-use' ? 'Terms of Use' : isBlogIndex ? 'Editorial Blog' : isBlogPost ? 'Article' : selectedTool?.name || 'Overview'}</strong>
+            <strong>{currentPath === '/about' ? 'About' : currentPath === '/privacy-policy' ? 'Privacy Policy' : currentPath === '/terms-of-use' ? 'Terms of Use' : isBlogIndex ? 'Blog' : isBlogPost ? 'Article' : selectedTool?.name || 'Overview'}</strong>
           </div>
           <div className="top-actions">
             <a 
@@ -1161,7 +1304,7 @@ export default function App() {
 
             <footer style={{ marginTop: '60px', padding: '24px 0', borderTop: '1px solid var(--line)', textAlign: 'center', fontSize: '11px', color: 'var(--muted)' }}>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
-                <a href="/blog" onClick={(e) => { e.preventDefault(); navigate('/blog'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>Editorial Blog</a>
+                <a href="/blog" onClick={(e) => { e.preventDefault(); navigate('/blog'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>Blog</a>
                 <span>|</span>
                 <a href="/about" onClick={(e) => { e.preventDefault(); navigate('/about'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>About Wordflow</a>
                 <span>|</span>
