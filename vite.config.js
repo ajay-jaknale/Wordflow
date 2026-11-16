@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     Sitemap({
-      hostname: 'https://yourdomain.com',
+      hostname: 'https://www.getwordflow.com',
       routes: [
         '/',
         '/word-counter',
