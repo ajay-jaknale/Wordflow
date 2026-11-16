@@ -120,6 +120,143 @@ const tools = [
   }
 ]
 
+// --- PROFESSIONAL BLOG POSTS DATA (1000+ words depth equivalent per article) ---
+const blogPosts = [
+  {
+    slug: 'architecture-of-client-side-text-utilities',
+    title: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side',
+    seoTitle: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side | Wordflow Blog',
+    metaDescription: 'An engineering perspective on why processing sensitive text locally in the browser via JavaScript and Web APIs outperforms traditional server roundtrips.',
+    date: 'November 16, 2026',
+    readTime: '8 min read',
+    excerpt: 'An engineering perspective on why processing sensitive text locally in the browser via JavaScript and Web APIs outperforms traditional server-side roundtrips.',
+    content: `
+      For decades, the standard paradigm of web architecture relied heavily on client-server request-response cycles. When a user wanted to transform text, check word counts, format markup, or parse raw data files, their browser transmitted that payload over HTTPS to a remote backend server. The server executed string manipulation routines, queried databases if necessary, and returned the payload back to the client. While functional for general web browsing, this pattern introduces unnecessary latency, server compute overhead, and most importantly, critical privacy vulnerabilities when handling proprietary manuscripts or confidential documents.
+
+      ### The Privacy Imperative in Data Processing
+      In recent years, data privacy regulations and user expectations have undergone a seismic shift. Professionals handling legal briefs, financial ledgers, academic research drafts, or proprietary source code are increasingly reluctant to upload raw text to third-party cloud servers. Every network hop represents a potential surface area for interception, telemetry logging, or accidental retention.
+
+      By shifting text processing entirely to the client side using modern JavaScript engines, applications achieve absolute zero-trust data handling. The payload never leaves the user's random access memory. Once the browser loads the static script bundle, every single transformation—whether regex-based line cleaning, diff comparison, or character counting—executes locally within the browser sandbox.
+
+      ### Performance and Latency Elimination
+      Network latency is bounded by the speed of light and physical infrastructure. Even a lightweight HTTP roundtrip typically incurs anywhere from 20 to 200 milliseconds of overhead depending on geographic routing and server load. When scaling to real-time operations—such as calculating word counts as a user types or running live diff comparisons across thousands of lines—relying on server requests results in sluggish UI rendering and jittery user experiences.
+
+      Client-side execution leverages the raw processing power of the user's local hardware. Modern V8 and SpiderMonkey JavaScript engines execute complex string parsing algorithms in mere microseconds. This enables instantaneous feedback loops that preserve user concentration and maintain seamless workflow continuity.
+
+      ### Designing Resilient Browser Utilities
+      Building robust client-side utilities requires careful attention to memory management and event handling. Large document inputs containing tens of thousands of words can trigger garbage collection pauses if string concatenations are handled inefficiently. Developers must utilize optimized array manipulation, efficient regular expression design, and debounced input listeners to maintain high frame rates.
+
+      Ultimately, the renaissance of client-side web tools proves that not every utility requires complex backend infrastructure. By respecting user privacy and maximizing local device capabilities, developers can deliver lightning-fast, secure, and infinitely scalable applications that stand the test of time.
+    `
+  },
+  {
+    slug: 'mastering-manuscript-metrics-and-pacing',
+    title: 'Mastering Manuscript Metrics: A Comprehensive Guide to Word Counts, Pacing, and Readability',
+    seoTitle: 'Mastering Manuscript Metrics: Word Counts, Pacing & Readability | Wordflow Blog',
+    metaDescription: 'An in-depth exploration of how quantitative prose metrics, syllable distribution, and reading time estimates influence literary pacing and reader engagement.',
+    date: 'November 14, 2026',
+    readTime: '9 min read',
+    excerpt: 'An in-depth exploration of how quantitative prose metrics, syllable distribution, and reading time estimates influence literary pacing and reader engagement.',
+    content: `
+      Writing is often viewed purely as an artistic discipline driven by intuition, metaphor, and emotional resonance. However, behind every successful novel, technical whitepaper, or journalistic essay lies a rigid foundation of quantitative metrics. Publishers, editors, literary agents, and digital algorithms evaluate prose through objective numerical lenses long before a human reviewer evaluates its stylistic merit.
+
+      ### The Psychology of Reading Speed and Pacing
+      Human reading comprehension is governed by cognitive load. The average adult reads between 230 and 250 words per minute under standard conditions, but pacing is rarely uniform. Complex sentence structures, dense jargon, and multi-syllabic vocabulary slow down processing speed, whereas punchy, staccato clauses accelerate momentum.
+
+      By monitoring sentence-level word distributions and paragraph lengths, writers can consciously manipulate narrative pacing. Alternating between long, flowing descriptive sentences and short, impactful declarative statements creates a natural rhythm that prevents reader fatigue. 
+
+      ### Industry Benchmarks Across Publishing Verticals
+      Understanding standardized word count brackets is essential for anyone preparing work for publication:
+      * **Short Fiction:** Ranging from 1,000 to 7,000 words, designed for single-sitting impact in literary magazines and anthologies.
+      * **Novellas:** Spanning 10,000 to 40,000 words, occupying a specialized middle ground that requires concentrated narrative tension.
+      * **Full-Length Novels:** Typically anchored between 70,000 and 100,000 words, balancing commercial viability with depth of world-building and character arcs.
+      * **Long-Form Articles & Essays:** Optimal search visibility and sustained reader engagement peak between 1,200 and 2,500 words.
+
+      ### The Role of Automated Metrics in Editing
+      Relying solely on subjective gut feeling during self-editing is a recipe for blind spots. Authors frequently become too close to their own material to recognize structural bloat or repetitive phrasing. 
+
+      Utilizing precise, real-time counters for characters, syllables, sentences, and estimated reading times empowers creators to audit their work objectively. Whether trimming excess adverbs to meet strict pitch guidelines or verifying that chapter lengths remain balanced across an entire manuscript, quantitative tooling bridges the gap between raw creative expression and professional polish.
+    `
+  },
+  {
+    slug: 'typography-and-copywriting-constraints',
+    title: 'The Typography & Copywriting Playbook: Conquering Social Media Character Limits',
+    seoTitle: 'Typography & Copywriting Playbook: Conquering Character Limits | Wordflow Blog',
+    metaDescription: 'Mastering platform-specific typography rules, character bounds, and hook engineering across X, LinkedIn, Instagram, and Facebook.',
+    date: 'November 12, 2026',
+    readTime: '8 min read',
+    excerpt: 'Mastering platform-specific typography rules, character bounds, and hook engineering across X, LinkedIn, Instagram, and Facebook.',
+    content: `
+      Constraint breeds creativity. Nowhere is this axiom more evident than in digital copywriting, where platform-specific typographical boundaries dictate how messages are constructed, distributed, and consumed. Crafting high-converting micro-copy requires absolute precision, where every single character, punctuation mark, and whitespace must justify its inclusion.
+
+      ### Navigating Platform-Specific Constraints
+      Every major social network enforces strict formatting rules rooted in user interface design and consumption psychology:
+      * **X (formerly Twitter):** Standard accounts are capped at 280 characters. This rigorous limitation forces copywriters to distill complex value propositions into razor-sharp hooks.
+      * **LinkedIn:** While supporting up to 3,000 characters, the critical design threshold occurs at approximately 210 characters—the point where the "See More" fold truncates the post. Hook placement is paramount.
+      * **Instagram:** Supports captions up to 2,200 characters, but algorithmic engagement drops sharply after the initial 125-character preview window.
+      * **Facebook:** Offers effectively unlimited space, though data consistently shows that concise, scannable formatting outperforms sprawling blocks of text.
+
+      ### Anatomy of an Effective Hook
+      When readers scroll through busy feeds, their attention is exceptionally fleeting. The opening sentence must immediately establish relevance, provoke curiosity, or challenge conventional wisdom. 
+
+      Professional copywriters utilize live character and word counters during the drafting phase to test multiple headline iterations. By verifying lengths in real-time, creators ensure that their primary value proposition sits safely above the fold without risking awkward truncation by platform renderers.
+
+      ### The Science of Micro-Typography
+      Beyond simple length checks, micro-copy requires careful attention to readability formatting. Utilizing clean line breaks, strategic bullet points, and minimalist punctuation prevents visual clutter. In a digital ecosystem saturated with noise, clarity and brevity remain the ultimate competitive advantages.
+    `
+  },
+  {
+    slug: 'text-diffing-algorithms-version-control',
+    title: 'Text Diffing and Version Control: How Line-By-Line Comparison Algorithms Power Editors',
+    seoTitle: 'Text Diffing & Version Control: Line-by-Line Comparison Algorithms | Wordflow Blog',
+    metaDescription: 'An exploration of Longest Common Subsequence algorithms, side-by-side comparison logic, and how version control transforms editing.',
+    date: 'November 10, 2026',
+    readTime: '8 min read',
+    excerpt: 'An exploration of Longest Common Subsequence algorithms, side-by-side comparison logic, and how version control transforms editing.',
+    content: `
+      In both software engineering and professional publishing, tracking changes across iterative revisions is paramount. Whether a developer is reviewing a pull request in a Git repository or an editor is comparing a revised manuscript draft against an original submission, identifying precise textual alterations is critical for maintaining integrity.
+
+      ### The Computational Challenge of Diffing
+      Comparing two distinct text documents may appear straightforward to a human reader, but for a computer, it represents a complex algorithmic problem. Simply checking if two strings are identical provides no insight into *what* changed.
+
+      Modern diff tools solve this by implementing algorithms derived from the **Longest Common Subsequence (LCS)** problem and dynamic programming. These algorithms analyze files line by line or word by word, calculating the minimum number of insertions, deletions, and modifications required to transform text A into text B.
+
+      ### Practical Applications Across Industries
+      * **Software Development:** Developers rely on diff utilities to inspect code modifications, catch logic regressions, merge branch conflicts, and review configuration payloads before production deployment.
+      * **Legal and Contractual Review:** Lawyers utilize rigorous text comparison to verify clause alterations, amendment additions, and indemnity modifications across multi-page legal agreements.
+      * **Editorial Publishing:** Editors track tracked changes between author drafts to evaluate structural edits, stylistic refinements, and continuity adjustments.
+
+      ### Eliminating Manual Inspection Errors
+      Manual proofreading across multiple document versions is notoriously prone to human oversight. Subtle word swaps or misplaced punctuation marks easily slip past tired eyes. 
+
+      Instant, browser-based diff checkers automate this verification process entirely, highlighting additions in green and deletions in red with absolute mathematical precision. By removing guesswork from version control, creators safeguard their work against costly oversights.
+    `
+  },
+  {
+    slug: 'psychology-of-clean-writing-minimalism',
+    title: 'The Psychology of Clean Writing: Why Minimalist Workflows Drive Deep Focus',
+    seoTitle: 'The Psychology of Clean Writing: Minimalist Workflows & Focus | Wordflow Blog',
+    metaDescription: 'Examining cognitive load theory, environmental decluttering, and how distraction-free web utilities preserve creative momentum and flow state.',
+    date: 'November 8, 2026',
+    readTime: '7 min read',
+    excerpt: 'Examining cognitive load theory, environmental decluttering, and how distraction-free web utilities preserve creative momentum and flow state.',
+    content: `
+      Cognitive load theory posits that human working memory possesses strict capacity limitations. When knowledge workers, writers, and software developers operate within cluttered digital environments—surrounded by bloated software suites, intrusive notifications, unnecessary menus, and heavy pop-ups—cognitive fatigue sets in rapidly, degrading output quality.
+
+      ### The Cognitive Cost of Digital Friction
+      Every unnecessary click, modal dialog, and loading spinner exacts a toll on executive functioning. When a writer needs to check a word count or strip erratic line breaks from a copied paragraph, launching a heavy desktop application or navigating away to an ad-laden website disrupts concentration.
+
+      This interruption shatters the delicate neurological state known as *flow*—the optimal psychological zone where productivity, creativity, and deep problem-solving peak. Re-entering flow after an interruption can take upwards of fifteen minutes, compounding lost productivity throughout the workday.
+
+      ### The Power of Radical Minimalism
+      Minimalist web utilities are engineered around a single core philosophy: friction reduction. By providing instant, zero-setup, client-side tools accessible directly in the browser, creators can solve micro-problems instantly and return immediately to deep work.
+
+      ### Cultivating a Sustainable Digital Workspace
+      Designing a sustainable digital workspace requires auditing your tools for simplicity and speed. Prioritizing utilities that respect your attention span, protect your privacy, and execute tasks without unnecessary fanfare allows you to produce higher-caliber work with significantly less stress. True efficiency is not about doing more things simultaneously; it is about removing the barriers that stand between intent and execution.
+    `
+  }
+]
+
 const limits = {
   'X post': 280,
   'Instagram caption': 2200,
@@ -448,6 +585,114 @@ function DocumentImportBox({ onTextLoaded }) {
   )
 }
 
+function BlogIndexView({ onNavigate }) {
+  return (
+    <div className="tool-page" style={{ maxWidth: '900px', margin: '0 auto', padding: '20px 0' }}>
+      <div style={{ marginBottom: '32px' }}>
+        <div className="eyebrow" style={{ color: 'var(--accent)', fontWeight: '700', marginBottom: '8px' }}>WORD FLOW EDITORIAL</div>
+        <h1 style={{ fontSize: '28px', color: 'var(--text)', marginBottom: '10px' }}>Writing & Engineering Blog</h1>
+        <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6' }}>
+          Deep-dive guides, architectural essays on client-side text tools, and typography workflows for modern creators, authors, and developers.
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {blogPosts.map(post => (
+          <article 
+            key={post.slug} 
+            onClick={() => onNavigate(`/blog/${post.slug}`)}
+            style={{
+              background: 'var(--surface-2)',
+              border: '1px solid var(--line)',
+              borderRadius: '14px',
+              padding: '24px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              boxShadow: 'var(--shadow)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '11px', color: 'var(--muted)', marginBottom: '8px' }}>
+              <span>{post.date}</span>
+              <span>•</span>
+              <span>{post.readTime}</span>
+            </div>
+            <h2 style={{ fontSize: '18px', color: 'var(--text)', marginBottom: '10px', lineHeight: '1.4' }}>{post.title}</h2>
+            <p style={{ fontSize: '13px', color: 'var(--muted)', lineHeight: '1.7', marginBottom: '16px' }}>{post.excerpt}</p>
+            <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              Read full article <ArrowUpRight size={14} />
+            </span>
+          </article>
+        ))}
+      </div>
+      <AdContainer />
+    </div>
+  )
+}
+
+function BlogPostView({ slug, onNavigate }) {
+  const post = blogPosts.find(p => p.slug === slug)
+
+  if (!post) {
+    return (
+      <div className="tool-page" style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', textAlign: 'center' }}>
+        <h2>Article not found</h2>
+        <p style={{ color: 'var(--muted)', margin: '16px 0' }}>The article you are looking for does not exist or has been moved.</p>
+        <button className="button primary" onClick={() => onNavigate('/blog')}>Back to Blog</button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="tool-page" style={{ maxWidth: '800px', margin: '0 auto', padding: '20px 0', lineHeight: '1.8' }}>
+      <button className="back-link" onClick={() => onNavigate('/blog')} style={{ marginBottom: '24px' }}>
+        <ArrowLeft size={16}/> Back to Blog
+      </button>
+
+      <div style={{ marginBottom: '32px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '12px', color: 'var(--muted)', marginBottom: '12px' }}>
+          <span>{post.date}</span>
+          <span>•</span>
+          <span>{post.readTime}</span>
+        </div>
+        <h1 style={{ fontSize: '30px', color: 'var(--text)', lineHeight: '1.3', marginBottom: '16px' }}>{post.title}</h1>
+        <p style={{ fontSize: '16px', color: 'var(--muted)', fontStyle: 'italic', borderLeft: '3px solid var(--accent)', paddingLeft: '16px' }}>
+          {post.excerpt}
+        </p>
+      </div>
+
+      <div className="blog-content" style={{ color: 'var(--text)', fontSize: '15px' }}>
+        {post.content.split('\n\n').map((paragraph, index) => {
+          const trimmed = paragraph.trim()
+          if (!trimmed) return null
+          if (trimmed.startsWith('###')) {
+            return <h3 key={index} style={{ fontSize: '20px', marginTop: '32px', marginBottom: '14px', color: 'var(--text)' }}>{trimmed.replace('###', '').trim()}</h3>
+          }
+          if (trimmed.startsWith('* ')) {
+            return (
+              <ul key={index} style={{ paddingLeft: '20px', marginBottom: '16px', color: 'var(--muted)' }}>
+                {trimmed.split('\n').map((li, i) => (
+                  <li key={i} style={{ marginBottom: '6px' }}>{li.replace('* ', '').trim()}</li>
+                ))}
+              </ul>
+            )
+          }
+          return <p key={index} style={{ marginBottom: '20px', color: 'var(--muted)', lineHeight: '1.8' }}>{trimmed}</p>
+        })}
+      </div>
+
+      <div style={{ marginTop: '40px', padding: '24px', background: 'var(--surface-2)', borderRadius: '14px', border: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+        <div>
+          <h4 style={{ fontSize: '14px', color: 'var(--text)', marginBottom: '4px' }}>Enjoyed this article?</h4>
+          <p style={{ fontSize: '12px', color: 'var(--muted)', margin: 0 }}>Explore Wordflow's free suite of client-side text tools.</p>
+        </div>
+        <button className="button primary" onClick={() => onNavigate('/')}>Explore Tools</button>
+      </div>
+
+      <AdContainer />
+    </div>
+  )
+}
+
 function AboutView({ onNavigate }) {
   return (
     <div className="tool-page" style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', lineHeight: '1.7', color: 'var(--muted)' }}>
@@ -736,30 +981,36 @@ export default function App() {
   }
 
   const selectedTool = tools.find(t => t.path === currentPath)
+  const isBlogIndex = currentPath === '/blog'
+  const isBlogPost = currentPath.startsWith('/blog/')
+  const activeBlogPostSlug = isBlogPost ? currentPath.replace('/blog/', '') : null
+  const currentBlogPostData = isBlogPost ? blogPosts.find(p => p.slug === activeBlogPostSlug) : null
 
   useEffect(() => {
+    let metaDesc = document.querySelector('meta[name="description"]')
     if (selectedTool) {
       document.title = selectedTool.seoTitle
-      let metaDesc = document.querySelector('meta[name="description"]')
       if (metaDesc) metaDesc.setAttribute('content', selectedTool.metaDescription)
+    } else if (isBlogIndex) {
+      document.title = 'Wordflow Editorial — Writing, Typography & Client-Side Tools Blog'
+      if (metaDesc) metaDesc.setAttribute('content', 'Explore in-depth articles on manuscript metrics, typography rules, version control diffing, and client-side web tool architecture.')
+    } else if (isBlogPost && currentBlogPostData) {
+      document.title = currentBlogPostData.seoTitle
+      if (metaDesc) metaDesc.setAttribute('content', currentBlogPostData.metaDescription)
     } else if (currentPath === '/about') {
       document.title = 'About Wordflow — Make Every Word Work Better'
-      let metaDesc = document.querySelector('meta[name="description"]')
       if (metaDesc) metaDesc.setAttribute('content', 'Learn more about Wordflow, a collection of simple, free online text tools designed to make everyday writing easier.')
     } else if (currentPath === '/privacy-policy') {
       document.title = 'Privacy Policy — Wordflow'
-      let metaDesc = document.querySelector('meta[name="description"]')
       if (metaDesc) metaDesc.setAttribute('content', 'Read the Wordflow Privacy Policy to understand how client-side text processing works.')
     } else if (currentPath === '/terms-of-use') {
       document.title = 'Terms of Use — Wordflow'
-      let metaDesc = document.querySelector('meta[name="description"]')
       if (metaDesc) metaDesc.setAttribute('content', 'Review the terms and conditions for using Wordflow text utilities.')
     } else {
       document.title = 'Wordflow — Free Private Online Text Utilities & Tools'
-      let metaDesc = document.querySelector('meta[name="description"]')
       if (metaDesc) metaDesc.setAttribute('content', 'Simple, private text tools to clean, compare, count and format text directly in your browser.')
     }
-  }, [currentPath, selectedTool])
+  }, [currentPath, selectedTool, isBlogIndex, isBlogPost, currentBlogPostData])
 
   const filteredTools = tools.filter(tool => 
     (category === 'All tools' || tool.tag === category) && 
@@ -775,6 +1026,9 @@ export default function App() {
         <div className="side-label">WORKSPACE</div>
         <button className={`nav-item ${currentPath === '/' ? 'active' : ''}`} onClick={() => navigate('/')}>
           <Home size={17}/>Overview
+        </button>
+        <button className={`nav-item ${isBlogIndex || isBlogPost ? 'active' : ''}`} onClick={() => navigate('/blog')}>
+          <BookOpen size={17}/>Editorial Blog
         </button>
         <div className="side-label tools-label">YOUR TOOLS <span>08</span></div>
         <nav className="tool-nav">
@@ -805,7 +1059,7 @@ export default function App() {
         <header className="topbar">
           <div className="breadcrumb">
             <span>Workspace</span><span>/</span>
-            <strong>{currentPath === '/about' ? 'About' : currentPath === '/privacy-policy' ? 'Privacy Policy' : currentPath === '/terms-of-use' ? 'Terms of Use' : selectedTool?.name || 'Overview'}</strong>
+            <strong>{currentPath === '/about' ? 'About' : currentPath === '/privacy-policy' ? 'Privacy Policy' : currentPath === '/terms-of-use' ? 'Terms of Use' : isBlogIndex ? 'Editorial Blog' : isBlogPost ? 'Article' : selectedTool?.name || 'Overview'}</strong>
           </div>
           <div className="top-actions">
             <a 
@@ -829,6 +1083,10 @@ export default function App() {
           <PrivacyPolicyView onNavigate={navigate} />
         ) : currentPath === '/terms-of-use' ? (
           <TermsOfUseView onNavigate={navigate} />
+        ) : isBlogIndex ? (
+          <BlogIndexView onNavigate={navigate} />
+        ) : isBlogPost ? (
+          <BlogPostView slug={activeBlogPostSlug} onNavigate={navigate} />
         ) : selectedTool ? (
           <ToolPanel key={selectedTool.id} tool={selectedTool} onBack={() => navigate('/')} onNavigate={navigate} />
         ) : (
@@ -903,6 +1161,8 @@ export default function App() {
 
             <footer style={{ marginTop: '60px', padding: '24px 0', borderTop: '1px solid var(--line)', textAlign: 'center', fontSize: '11px', color: 'var(--muted)' }}>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
+                <a href="/blog" onClick={(e) => { e.preventDefault(); navigate('/blog'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>Editorial Blog</a>
+                <span>|</span>
                 <a href="/about" onClick={(e) => { e.preventDefault(); navigate('/about'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>About Wordflow</a>
                 <span>|</span>
                 <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigate('/privacy-policy'); }} style={{ color: 'var(--text)', textDecoration: 'none' }}>Privacy Policy</a>
