@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     Sitemap({
-      hostname: 'https://getwordflow.com',
+      hostname: 'https://www.getwordflow.com',
       dynamicRoutes: [
         '/',
         '/word-counter',
