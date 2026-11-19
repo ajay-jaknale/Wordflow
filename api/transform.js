@@ -1,5 +1,5 @@
-import { guardRequest } from '../../lib/apiGuard.js';
-import { toCase } from '../../lib/processors.js';
+import { guardRequest } from '../lib/apiGuard.js';
+import { toCase } from '../lib/processors.js';
 
 const ALLOWED_MODES = ['sentence', 'title', 'upper', 'lower', 'camel', 'pascal', 'snake', 'kebab'];
 

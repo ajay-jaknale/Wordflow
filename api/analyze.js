@@ -1,5 +1,5 @@
-import { guardRequest } from '../../lib/apiGuard.js';
-import { countStats } from '../../lib/processors.js';
+import { guardRequest } from '../lib/apiGuard.js';
+import { countStats } from '../lib/processors.js';
 
 const PLATFORM_LIMITS = {
   x: 280,

@@ -1,5 +1,5 @@
-import { guardRequest } from '../../lib/apiGuard.js';
-import { diffText } from '../../lib/processors.js';
+import { guardRequest } from '../lib/apiGuard.js';
+import { diffText } from '../lib/processors.js';
 
 export default function handler(req, res) {
   if (!guardRequest(req, res)) return;
