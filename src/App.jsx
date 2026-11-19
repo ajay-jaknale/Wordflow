@@ -1,14 +1,39 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react'
 import {
   AlignLeft, ArrowLeft, ArrowLeftRight, ArrowUpRight, BookOpen, Check,
-  ChevronDown, Clipboard, Clock3, Code2, Coffee, Copy, Download, FileText, Hash, Home,
+  ChevronDown, Clipboard, Clock3, Code2, Coffee, Copy, Download, FileCode2, FileText, Hash, Home,
   Layers3, ListFilter, Moon, RotateCcw, Search, Settings2, ShieldCheck,
   Sparkles, Sun, Trash2, Type, Upload, X
 } from 'lucide-react'
 import * as pdfjsLib from 'pdfjs-dist'
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
+import TurndownService from 'turndown'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker
+
+const SAMPLE_HTML = `<h2>Clean Markdown for LLMs &amp; Docs</h2>
+<p>Paste <strong>HTML</strong> or copy rich text from a webpage or Google Doc and convert it to clean Markdown.</p>
+<ul>
+  <li>Preserves <code>inline code</code> and headings</li>
+  <li>Strips noisy scripts and styles automatically</li>
+</ul>
+<p>Visit <a href="https://www.getwordflow.com">Wordflow</a> for more text utilities.</p>`
+
+function convertHtmlToMarkdown(html, opts) {
+  if (!html.trim()) return ''
+  const service = new TurndownService({
+    headingStyle: opts.headingStyle || 'atx',
+    bulletListMarker: opts.bulletListMarker || '-',
+    codeBlockStyle: opts.codeBlockStyle || 'fenced',
+    fence: '```',
+    emDelimiter: '*',
+    strongDelimiter: '**',
+  })
+  if (opts.stripScriptsAndStyles !== false) {
+    service.remove(['script', 'style', 'noscript', 'iframe'])
+  }
+  return service.turndown(html).trim()
+}
 
 const tools = [
   {
@@ -243,6 +268,37 @@ const tools = [
     relatedBlogs: [
       { slug: 'typography-and-copywriting-constraints', title: 'The Typography & Copywriting Playbook: Conquering Social Media Character Limits' }
     ]
+  },
+  {
+    id: 'html-to-markdown',
+    path: '/html-to-markdown',
+    name: 'HTML to Markdown Converter',
+    seoTitle: 'Free Online HTML to Markdown Converter for Writers & LLMs | Wordflow',
+    metaDescription: 'Convert HTML or rich text into clean Markdown right in your browser. Strip noisy tags, preserve headings and lists, and copy or export in one click.',
+    description: 'Convert raw HTML or rich text into clean Markdown instantly.',
+    icon: FileCode2,
+    tag: 'Markdown',
+    explanation: 'The HTML to Markdown Converter helps writers, developers, and AI builders turn raw HTML snippets or rich text into clean, portable Markdown directly inside the browser. Whether you are preparing documentation, cleaning scraped markup for LLM prompts, or migrating content between editors, it strips unnecessary noise while keeping your structure intact.',
+    howToSteps: [
+      'Paste raw HTML into the input box or load the sample snippet to test.',
+      'Choose your preferred heading style, bullet marker, code block format, and script/style cleanup options.',
+      'Click "Convert to Markdown" to generate clean Markdown output.',
+      'Copy the Markdown to your clipboard or download it as a file.'
+    ],
+    examples: [
+      'LLM & RAG Prep: Turning HTML excerpts into compact Markdown before feeding context into AI workflows.',
+      'Documentation & Blogs: Converting HTML fragments into clean Markdown for static site generators and notes.',
+      'Content Cleanup: Stripping stray script and style tags from copied markup.'
+    ],
+    faqs: [
+      { q: 'Does HTML to Markdown run locally in my browser?', a: 'Yes, all conversion happens client-side in your browser without sending your HTML to an external server.' },
+      { q: 'Can I strip script and style tags automatically?', a: 'Yes, enable the option to remove script, style, noscript, and iframe elements during conversion.' },
+      { q: 'What Markdown styles are supported?', a: 'You can switch between ATX (# ##) and Setext headings, choose -, *, or + bullet markers, and pick fenced or indented code blocks.' },
+      { q: 'Can I export the converted Markdown?', a: 'Yes, you can copy it with one click or download it using the Download Result menu.' }
+    ],
+    relatedBlogs: [
+      { slug: 'architecture-of-client-side-text-utilities', title: 'The Architecture of Text: Why Modern Web Applications Are Shifting Client-Side' }
+    ]
   }
 ]
 
@@ -333,7 +389,7 @@ const blogPosts = [
   {
     slug: 'text-diffing-algorithms-version-control',
     title: 'Text Diffing and Version Control: How Line-By-Line Comparison Algorithms Power Editors',
-    seoTitle: 'Text Diffing & Version Control: Line-by-Line Comparison Algorithms | Wordflow Blog',
+    seoTitle: 'Text Diffing & Version Control: Line-By-Line Comparison Algorithms | Wordflow Blog',
     metaDescription: 'An exploration of Longest Common Subsequence algorithms, side-by-side comparison logic, and how version control transforms editing.',
     date: 'November 10, 2026',
     readTime: '8 min read',
@@ -448,7 +504,7 @@ function ActionButton({ children, onClick, variant = 'secondary', disabled = fal
 
 function CopyButton({ value }) {
   const { copied, copy } = useClipboard()
-  return <ActionButton onClick={() => copy(value)}><Copy size={15} />{copied ? 'Copied' : 'Copy result'}</ActionButton>
+  return <ActionButton onClick={() => copy(value)}><Copy size={15}/>{copied ? 'Copied' : 'Copy result'}</ActionButton>
 }
 
 function DownloadDropdown({ content, toolId }) {
@@ -465,15 +521,14 @@ function DownloadDropdown({ content, toolId }) {
         printWindow.document.write(`
           <html>
             <head>
-              <title>Wordflow Result</title>
+              <title></title>
               <style>
-                body { font-family: Arial, sans-serif; padding: 40px; color: #111; line-height: 1.6; }
-                pre { white-space: pre-wrap; font-family: inherit; font-size: 14px; }
+                @page { margin: 20mm; }
+                body { font-family: Arial, sans-serif; margin: 0; color: #111; line-height: 1.6; }
+                pre { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; font-size: 14px; margin: 0; }
               </style>
             </head>
             <body>
-              <h2>Wordflow Export Result</h2>
-              <hr style="border:0; border-top:1px solid #ccc; margin-bottom:20px;"/>
               <pre>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
             </body>
           </html>
@@ -502,7 +557,7 @@ function DownloadDropdown({ content, toolId }) {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `wordflow-result.${ext}`
+    a.download = `result.${ext}`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -520,16 +575,16 @@ function DownloadDropdown({ content, toolId }) {
           <button onClick={() => downloadFile('txt')} style={menuItemStyle}>Text Document (.txt)</button>
           <button onClick={() => downloadFile('pdf')} style={menuItemStyle}>PDF Document (.pdf)</button>
           <button onClick={() => downloadFile('doc')} style={menuItemStyle}>Word Document (.doc)</button>
-          <button 
-            onClick={() => isTabularData && downloadFile('excel')} 
-            disabled={!isTabularData} 
+          <button
+            onClick={() => isTabularData && downloadFile('excel')}
+            disabled={!isTabularData}
             style={{
               ...menuItemStyle,
               color: isTabularData ? 'var(--text)' : 'var(--muted)',
               opacity: isTabularData ? 1 : 0.4,
               cursor: isTabularData ? 'pointer' : 'not-allowed',
             }}
-            title={isTabularData ? "Download as Spreadsheet" : "Excel export available only for list/tabular data"}
+            title={isTabularData ? 'Download as Spreadsheet' : 'Excel export available only for list/tabular data'}
           >
             Excel / Spreadsheet (.csv)
           </button>
@@ -609,10 +664,24 @@ function AdContainer() {
   )
 }
 
-function DocumentImportBox({ onTextLoaded }) {
-  const [format, setFormat] = useState('pdf')
+function DocumentImportBox({ onTextLoaded, defaultFormat = 'pdf', allowedFormats = ['pdf', 'txt', 'md'] }) {
+  const [format, setFormat] = useState(defaultFormat)
   const [busy, setBusy] = useState(false)
   const fileInputRef = useRef(null)
+
+  const acceptMap = {
+    pdf: 'application/pdf,.pdf',
+    txt: 'text/plain,.txt',
+    md: '.md,text/markdown',
+    html: 'text/html,.html,.htm',
+  }
+
+  const labelMap = {
+    pdf: 'PDF Document (.pdf)',
+    txt: 'Plain Text File (.txt)',
+    md: 'Markdown File (.md)',
+    html: 'HTML Document (.html, .htm)',
+  }
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0]
@@ -668,11 +737,11 @@ function DocumentImportBox({ onTextLoaded }) {
         <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           Alternative: Import Document File
         </span>
-        <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Upload book, manuscript, or notes</span>
+        <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Upload file directly</span>
       </div>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <select 
-          value={format} 
+        <select
+          value={format}
           onChange={e => setFormat(e.target.value)}
           style={{
             padding: '8px 12px',
@@ -685,26 +754,26 @@ function DocumentImportBox({ onTextLoaded }) {
             minWidth: '150px'
           }}
         >
-          <option value="pdf">PDF Document (.pdf)</option>
-          <option value="txt">Plain Text File (.txt)</option>
-          <option value="md">Markdown File (.md)</option>
+          {allowedFormats.map(fmt => (
+            <option key={fmt} value={fmt}>{labelMap[fmt]}</option>
+          ))}
         </select>
-        <button 
-          className="button primary" 
+        <button
+          className="button primary"
           onClick={() => fileInputRef.current?.click()}
           disabled={busy}
           style={{ fontSize: '12px', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}
         >
-          <Upload size={14}/>
+          <Upload size={14} />
           {busy ? 'Extracting text...' : 'Upload File'}
         </button>
       </div>
-      <input 
-        ref={fileInputRef} 
-        type="file" 
-        accept={format === 'pdf' ? 'application/pdf,.pdf' : format === 'txt' ? 'text/plain,.txt' : '.md,text/markdown'} 
-        hidden 
-        onChange={handleFileChange} 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={acceptMap[format]}
+        hidden
+        onChange={handleFileChange}
       />
     </div>
   )
@@ -744,12 +813,12 @@ function BlogIndexView({ onNavigate }) {
             <h2 style={{ fontSize: '18px', color: 'var(--text)', marginBottom: '10px', lineHeight: '1.4' }}>{post.title}</h2>
             <p style={{ fontSize: '13px', color: 'var(--muted)', lineHeight: '1.7', marginBottom: '16px' }}>{post.excerpt}</p>
             <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              Read full article <ArrowUpRight size={14} />
+              Read full article <ArrowUpRight size={14}/>
             </span>
           </article>
         ))}
       </div>
-      <AdContainer />
+      <AdContainer/>
     </div>
   )
 }
@@ -813,7 +882,7 @@ function BlogPostView({ slug, onNavigate }) {
         <button className="button primary" onClick={() => onNavigate('/')}>Explore Tools</button>
       </div>
 
-      <AdContainer />
+      <AdContainer/>
     </div>
   )
 }
@@ -864,6 +933,7 @@ function ToolPanel({ tool, onBack, onNavigate }) {
   const [mode, setMode] = useState('title')
   const [platform, setPlatform] = useState('X post')
   const [options, setOptions] = useState({ trimLines: true, removeEmpty: false, collapseSpaces: true, collapseBlank: true, smartQuotes: false, removeTrailing: true, lowercase: false, uppercase: false })
+  const [mdOptions, setMdOptions] = useState({ headingStyle: 'atx', bulletListMarker: '-', codeBlockStyle: 'fenced', stripScriptsAndStyles: true })
   const [uniqueOnly, setUniqueOnly] = useState(true)
   const [caseSensitive, setCaseSensitive] = useState(false)
   const [fileName, setFileName] = useState('')
@@ -872,6 +942,13 @@ function ToolPanel({ tool, onBack, onNavigate }) {
   const Icon = tool.icon
 
   const runCleaner = () => setOutput(cleanText(input, options))
+  const runHtmlToMarkdown = () => {
+    try {
+      setOutput(convertHtmlToMarkdown(input, mdOptions))
+    } catch (err) {
+      setOutput(`Conversion error: ${err instanceof Error ? err.message : 'Invalid HTML input'}`)
+    }
+  }
   const runDuplicates = () => {
     const lines = input.split(/\r?\n/)
     const seen = new Set()
@@ -906,195 +983,324 @@ function ToolPanel({ tool, onBack, onNavigate }) {
     return rows
   }, [input, second])
 
-  return <div className="tool-page">
-    <button className="back-link" onClick={onBack}><ArrowLeft size={16}/> All tools</button>
-    <div className="tool-heading">
-      <div className="tool-icon large"><Icon size={22}/></div>
-      <div><div className="eyebrow">{tool.tag} TOOL</div><h1>{tool.name}</h1><p>{tool.description}</p></div>
-    </div>
+  return (
+    <div className="tool-page">
+      <button className="back-link" onClick={onBack}><ArrowLeft size={16} /> All tools</button>
+      <div className="tool-heading">
+        <div className="tool-icon large"><Icon size={22} /></div>
+        <div><div className="eyebrow">{tool.tag} TOOL</div><h1>{tool.name}</h1><p>{tool.description}</p></div>
+      </div>
 
-    {tool.id === 'diff' && <div className="workspace-grid two-col">
-      <section className="panel">
-        <TextArea label="Original text" value={input} onChange={setInput} placeholder="Paste the original text here..." />
-        <div className="inline-actions"><ActionButton onClick={() => setInput('')}><Trash2 size={15}/>Clear text</ActionButton></div>
-      </section>
-      <section className="panel">
-        <TextArea label="Revised text" value={second} onChange={setSecond} placeholder="Paste the revised text here..." />
-        <div className="inline-actions"><ActionButton onClick={() => setSecond('')}><Trash2 size={15}/>Clear text</ActionButton></div>
-      </section>
-      <section className="panel full-width">
-        <div className="panel-top">
-          <div><h3>Comparison</h3><p>Line-by-line comparison. Added, removed and changed lines are highlighted.</p></div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <DownloadDropdown content={diffLines.map(r => `${r.status.toUpperCase()}: ${r.left || ''} | ${r.right || ''}`).join('\n')} toolId={tool.id} />
-            <ActionButton onClick={() => {setInput('');setSecond('')}}><RotateCcw size={15}/>Reset</ActionButton>
-          </div>
-        </div>
-        {(input || second) ? <div className="diff-list">{diffLines.map(row => <div key={row.index} className={`diff-row ${row.status}`}><span className="line-no">{row.index}</span><span className="diff-mark">{row.status === 'added' ? '+' : row.status === 'removed' ? '−' : row.status === 'changed' ? '~' : ' '}</span><span>{row.left ?? ''}</span><span className="diff-divider"/><span>{row.right ?? ''}</span></div>)}</div> : <EmptyState text="Add text to both sides to compare changes."/>}
-      </section>
-    </div>}
-
-    {tool.id === 'cleaner' && <div className="workspace-grid two-col">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <TextArea label="Your text" value={input} onChange={setInput} placeholder="Paste text you want to clean..." />
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton></div>
-      </section>
-      <section className="panel"><div className="panel-top"><div><h3>Cleaning options</h3><p>Choose the formatting changes to apply.</p></div></div><div className="option-list">
-        {Object.entries({trimLines:'Trim spaces at line starts',removeEmpty:'Remove empty lines',collapseSpaces:'Collapse repeated spaces',collapseBlank:'Limit multiple blank lines',smartQuotes:'Replace curly quotes',removeTrailing:'Remove trailing spaces',lowercase:'Convert to lowercase',uppercase:'Convert to uppercase'}).map(([key,label]) => <label className="check-row" key={key}><input type="checkbox" checked={options[key]} onChange={e => setOptions(o => ({...o,[key]:e.target.checked, ...(key === 'lowercase' && e.target.checked ? {uppercase:false}:{}), ...(key === 'uppercase' && e.target.checked ? {lowercase:false}:{})}))}/><span>{label}</span></label>)}
-      </div><ActionButton variant="primary" onClick={runCleaner}><Sparkles size={15}/>Clean text</ActionButton></section>
-      <section className="panel full-width">
-        <div className="panel-top">
-          <div><h3>Cleaned result</h3><p>{output ? `${countStats(output).words} words · ${output.length} characters` : 'Your cleaned text will appear here.'}</p></div>
-          {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output}/></div>}
-        </div>
-        {output ? <pre className="result-text">{output}</pre> : <EmptyState/>}
-      </section>
-    </div>}
-
-    {tool.id === 'counter' && <div className="workspace-grid">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <TextArea label="Enter or paste your text" value={input} onChange={setInput} placeholder="Start typing or paste your text here..." rows={13}/>
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton><CopyButton value={input}/></div>
-      </section>
-      <section className="panel"><div className="panel-top"><div><h3>Text statistics</h3><p>Updates automatically as you type.</p></div><span className="live-pill"><span/>Live</span></div><div className="stats-grid"><Stat label="Words" value={stats.words.toLocaleString()}/><Stat label="Characters" value={stats.chars.toLocaleString()}/><Stat label="Without spaces" value={stats.noSpaces.toLocaleString()}/><Stat label="Sentences" value={stats.sentences.toLocaleString()}/><Stat label="Paragraphs" value={stats.paragraphs.toLocaleString()}/><Stat label="Reading time" value={stats.words === 0 ? '0 min' : `${Math.ceil(stats.words/200)} min`}/></div><div className="tip-box"><BookOpen size={17}/><span>Reading time is estimated at 200 words per minute.</span></div></section>
-    </div>}
-
-    {tool.id === 'duplicates' && <div className="workspace-grid two-col">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <TextArea label="Your lines" value={input} onChange={setInput} placeholder={'Paste your list here...\nOne item per line'} rows={13}/>
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton></div>
-        <div className="option-list compact" style={{ marginTop: '12px' }}><label className="check-row"><input type="checkbox" checked={uniqueOnly} onChange={e => setUniqueOnly(e.target.checked)}/><span>Keep only unique lines</span></label><label className="check-row"><input type="checkbox" checked={caseSensitive} onChange={e => setCaseSensitive(e.target.checked)}/><span>Case-sensitive matching</span></label></div>
-        <ActionButton variant="primary" onClick={runDuplicates}><ListFilter size={15}/>Remove duplicates</ActionButton>
-      </section>
-      <section className="panel">
-        <div className="panel-top">
-          <div><h3>Unique lines</h3><p>Repeated lines are removed while preserving order.</p></div>
-          {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output}/></div>}
-        </div>
-        {output ? <pre className="result-text">{output}</pre> : <EmptyState text="Your cleaned list will appear here."/>}
-      </section>
-    </div>}
-
-    {tool.id === 'case' && <div className="workspace-grid">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <TextArea label="Enter your text" value={input} onChange={setInput} placeholder="Type or paste something..." rows={12}/>
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton></div>
-        <div className="case-grid" style={{ marginTop: '12px' }}>{[['sentence','Sentence case'],['title','Title Case'],['upper','UPPERCASE'],['lower','lowercase'],['camel','camelCase'],['pascal','PascalCase'],['snake','snake_case'],['kebab','kebab-case']].map(([id,label]) => <button key={id} className={`case-button ${mode===id?'selected':''}`} onClick={() => {setMode(id);setOutput(toCase(input,id))}}>{label}</button>)}</div>
-        <ActionButton variant="primary" onClick={() => setOutput(toCase(input,mode))}><Type size={15}/>Convert text</ActionButton>
-      </section>
-      <section className="panel">
-        <div className="panel-top">
-          <div><h3>Converted text</h3><p>Choose a format, then copy your result.</p></div>
-          {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output}/></div>}
-        </div>
-        {output ? <pre className="result-text">{output}</pre> : <EmptyState text="Your converted text will appear here."/>}
-      </section>
-    </div>}
-
-    {tool.id === 'pdf' && <div className="workspace-grid">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <div className="panel-top" style={{ marginTop: '10px' }}><div><h3>PDF & Document Tools</h3><p>Extracted document text appears below.</p></div><FileText size={19}/></div>
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="tip-box" style={{ marginTop: '12px' }}><ShieldCheck size={17}/><span>Your document is processed on this device and is not uploaded to a server.</span></div>
-      </section>
-      <section className="panel">
-        <div className="panel-top"><div><h3>Extracted text</h3><p>Review or edit the extracted text before cleaning.</p></div>{input && <CopyButton value={input}/>}</div>
-        <textarea className="pdf-textarea" value={input} onChange={e => setInput(e.target.value)} placeholder="Extracted document text will appear here..." rows={12}/>
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton></div>
-      </section>
-      <section className="panel full-width">
-        <div className="panel-top">
-          <div><h3>Cleaned text</h3><p>Removes common line-break artifacts and joins wrapped paragraphs.</p></div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {output && <DownloadDropdown content={output} toolId={tool.id} />}
-            <ActionButton variant="primary" onClick={() => setOutput(input.replace(/-\s*\n\s*/g, '').replace(/([^\n])\n([^\n])/g, '$1 $2').replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n'))} disabled={!input}><Sparkles size={15}/>Clean line breaks</ActionButton>
-          </div>
-        </div>
-        {output ? <><pre className="result-text">{output}</pre><div className="inline-actions"><CopyButton value={output}/></div></> : <EmptyState text="Import a document, then clean the extracted text."/>}
-      </section>
-    </div>}
-
-    {tool.id === 'reading' && <div className="workspace-grid">
-      <section className="panel">
-        <DocumentImportBox onTextLoaded={handleDocumentImport} />
-        <TextArea label="Paste your text or upload a book" value={input} onChange={setInput} placeholder="Paste an article, essay or upload your book..." rows={14}/>
-        {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14}/> {fileName}</div>}
-        <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName(''); }}><Trash2 size={15}/>Clear text</ActionButton></div>
-      </section>
-      <section className="panel"><div className="panel-top"><div><h3>Time estimate</h3><p>Based on your text length.</p></div><Clock3 size={20}/></div><div className="reading-feature"><span>Estimated reading time</span><strong>{Math.floor(stats.words/200)}<small> min</small> {Math.round((stats.words%200)/200*60)}<small> sec</small></strong><p>At an average pace of 200 words per minute.</p></div><div className="stats-grid"><Stat label="Word count" value={stats.words.toLocaleString()}/><Stat label="Slow · 150 wpm" value={`${Math.ceil(stats.words/150)} min`}/><Stat label="Average · 200 wpm" value={`${Math.ceil(stats.words/200)} min`}/><Stat label="Fast · 250 wpm" value={`${Math.ceil(stats.words/250)} min`}/></div></section>
-    </div>}
-
-    {tool.id === 'social' && <div className="workspace-grid">
-      <section className="panel">
-        <TextArea label="Write your post" value={input} onChange={setInput} placeholder="Draft your social media post here..." rows={14}/>
-        <div className="inline-actions"><ActionButton onClick={() => setInput('')}><Trash2 size={15}/>Clear text</ActionButton><CopyButton value={input}/></div>
-      </section>
-      <section className="panel"><div className="panel-top"><div><h3>Platform check</h3><p>Select a platform to check your character count.</p></div><Settings2 size={19}/></div><label className="field-wrap"><span className="field-label">Platform</span><select value={platform} onChange={e => setPlatform(e.target.value)}>{Object.keys(limits).map(p => <option key={p}>{p}</option>)}</select></label><div className="limit-card"><div className="limit-head"><span>Characters used</span><strong>{stats.chars.toLocaleString()} / {limits[platform].toLocaleString()}</strong></div><div className="progress-track"><div className={`progress-fill ${stats.chars>limits[platform]?'over':''}`} style={{width:`${Math.min(100,stats.chars/limits[platform]*100)}%`}}/></div><p className={stats.chars>limits[platform]?'over-text':''}>{stats.chars>limits[platform] ? `${(stats.chars-limits[platform]).toLocaleString()} characters over the selected limit.` : `${(limits[platform]-stats.chars).toLocaleString()} characters remaining.`}</p></div><div className="tip-box"><ShieldCheck size={17}/><span>These are general text-length limits. Platform rules and counting methods can change.</span></div></section>
-    </div>}
-
-    {/* RICH SEO EDITORIAL CONTENT SECTION (300-600 words per tool) */}
-    <section style={{ marginTop: '50px', padding: '32px', background: 'var(--surface-2)', borderRadius: '16px', border: '1px solid var(--line)', lineHeight: '1.8' }}>
-      <h2 style={{ fontSize: '20px', color: 'var(--text)', marginBottom: '12px' }}>About {tool.name}</h2>
-      <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '24px' }}>{tool.explanation}</p>
-
-      <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>How to Use {tool.name}</h3>
-      <ol style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
-        {tool.howToSteps.map((step, idx) => (
-          <li key={idx} style={{ marginBottom: '8px' }}>{step}</li>
-        ))}
-      </ol>
-
-      <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Real-World Use Cases & Examples</h3>
-      <ul style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
-        {tool.examples.map((ex, idx) => (
-          <li key={idx} style={{ marginBottom: '8px' }}>{ex}</li>
-        ))}
-      </ul>
-
-      {tool.faqs && tool.faqs.length > 0 && (
-        <>
-          <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Frequently Asked Questions</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
-            {tool.faqs.map((faq, index) => (
-              <div key={index} style={{ borderBottom: index < tool.faqs.length - 1 ? '1px solid var(--line)' : 'none', paddingBottom: index < tool.faqs.length - 1 ? '12px' : '0' }}>
-                <strong style={{ display: 'block', fontSize: '13px', color: 'var(--text)', marginBottom: '4px' }}>{faq.q}</strong>
-                <p style={{ fontSize: '12px', color: 'var(--muted)', margin: 0, lineHeight: '1.6' }}>{faq.a}</p>
+      {tool.id === 'diff' && (
+        <div className="workspace-grid two-col">
+          <section className="panel">
+            <TextArea label="Original text" value={input} onChange={setInput} placeholder="Paste the original text here..." />
+            <div className="inline-actions"><ActionButton onClick={() => setInput('')}><Trash2 size={15} />Clear text</ActionButton></div>
+          </section>
+          <section className="panel">
+            <TextArea label="Revised text" value={second} onChange={setSecond} placeholder="Paste the revised text here..." />
+            <div className="inline-actions"><ActionButton onClick={() => setSecond('')}><Trash2 size={15} />Clear text</ActionButton></div>
+          </section>
+          <section className="panel full-width">
+            <div className="panel-top">
+              <div><h3>Comparison</h3><p>Line-by-line comparison. Added, removed and changed lines are highlighted.</p></div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <DownloadDropdown content={diffLines.map(r => `${r.status.toUpperCase()}: ${r.left || ''} | ${r.right || ''}`).join('\n')} toolId={tool.id} />
+                <ActionButton onClick={() => { setInput(''); setSecond('') }}><RotateCcw size={15} />Reset</ActionButton>
               </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {tool.relatedBlogs && tool.relatedBlogs.length > 0 && (
-        <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
-          <h3 style={{ fontSize: '14px', color: 'var(--text)', marginBottom: '10px' }}>Related Articles & Guides</h3>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            {tool.relatedBlogs.map((blog) => (
-              <button 
-                key={blog.slug} 
-                onClick={() => onNavigate(`/blog/${blog.slug}`)}
-                className="button"
-                style={{ fontSize: '11px', padding: '8px 12px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-              >
-                <BookOpen size={13} /> {blog.title}
-              </button>
-            ))}
-          </div>
+            </div>
+            {(input || second) ? (
+              <div className="diff-list">
+                {diffLines.map(row => (
+                  <div key={row.index} className={`diff-row ${row.status}`}>
+                    <span className="line-no">{row.index}</span>
+                    <span className="diff-mark">{row.status === 'added' ? '+' : row.status === 'removed' ? '−' : row.status === 'changed' ? '~' : ' '}</span>
+                    <span>{row.left ?? ''}</span>
+                    <span className="diff-divider" />
+                    <span>{row.right ?? ''}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptyState text="Add text to both sides to compare changes." />
+            )}
+          </section>
         </div>
       )}
-    </section>
 
-    <AdContainer />
-  </div>
+      {tool.id === 'cleaner' && (
+        <div className="workspace-grid two-col">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <TextArea label="Your text" value={input} onChange={setInput} placeholder="Paste text you want to clean..." />
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton></div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Cleaning options</h3><p>Choose the formatting changes to apply.</p></div></div>
+            <div className="option-list">
+              {Object.entries({ trimLines: 'Trim spaces at line starts', removeEmpty: 'Remove empty lines', collapseSpaces: 'Collapse repeated spaces', collapseBlank: 'Limit multiple blank lines', smartQuotes: 'Replace curly quotes', removeTrailing: 'Remove trailing spaces', lowercase: 'Convert to lowercase', uppercase: 'Convert to uppercase' }).map(([key, label]) => (
+                <label className="check-row" key={key}>
+                  <input type="checkbox" checked={options[key]} onChange={e => setOptions(o => ({ ...o, [key]: e.target.checked, ...(key === 'lowercase' && e.target.checked ? { uppercase: false } : {}), ...(key === 'uppercase' && e.target.checked ? { lowercase: false } : {}) }))} />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+            <ActionButton variant="primary" onClick={runCleaner}><Sparkles size={15} />Clean text</ActionButton>
+          </section>
+          <section className="panel full-width">
+            <div className="panel-top">
+              <div><h3>Cleaned result</h3><p>{output ? `${countStats(output).words} words · ${output.length} characters` : 'Your cleaned text will appear here.'}</p></div>
+              {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output} /></div>}
+            </div>
+            {output ? <pre className="result-text">{output}</pre> : <EmptyState />}
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'counter' && (
+        <div className="workspace-grid">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <TextArea label="Enter or paste your text" value={input} onChange={setInput} placeholder="Start typing or paste your text here..." rows={13} />
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton><CopyButton value={input} /></div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Text statistics</h3><p>Updates automatically as you type.</p></div><span className="live-pill"><span />Live</span></div>
+            <div className="stats-grid">
+              <Stat label="Words" value={stats.words.toLocaleString()} />
+              <Stat label="Characters" value={stats.chars.toLocaleString()} />
+              <Stat label="Without spaces" value={stats.noSpaces.toLocaleString()} />
+              <Stat label="Sentences" value={stats.sentences.toLocaleString()} />
+              <Stat label="Paragraphs" value={stats.paragraphs.toLocaleString()} />
+              <Stat label="Reading time" value={stats.words === 0 ? '0 min' : `${Math.ceil(stats.words / 200)} min`} />
+            </div>
+            <div className="tip-box"><BookOpen size={17} /><span>Reading time is estimated at 200 words per minute.</span></div>
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'duplicates' && (
+        <div className="workspace-grid two-col">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <TextArea label="Your lines" value={input} onChange={setInput} placeholder={'Paste your list here...\nOne item per line'} rows={13} />
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton></div>
+            <div className="option-list compact" style={{ marginTop: '12px' }}>
+              <label className="check-row"><input type="checkbox" checked={uniqueOnly} onChange={e => setUniqueOnly(e.target.checked)} /><span>Keep only unique lines</span></label>
+              <label className="check-row"><input type="checkbox" checked={caseSensitive} onChange={e => setCaseSensitive(e.target.checked)} /><span>Case-sensitive matching</span></label>
+            </div>
+            <ActionButton variant="primary" onClick={runDuplicates}><ListFilter size={15} />Remove duplicates</ActionButton>
+          </section>
+          <section className="panel">
+            <div className="panel-top">
+              <div><h3>Unique lines</h3><p>Repeated lines are removed while preserving order.</p></div>
+              {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output} /></div>}
+            </div>
+            {output ? <pre className="result-text">{output}</pre> : <EmptyState text="Your cleaned list will appear here." />}
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'case' && (
+        <div className="workspace-grid">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <TextArea label="Enter your text" value={input} onChange={setInput} placeholder="Type or paste something..." rows={12} />
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton></div>
+            <div className="case-grid" style={{ marginTop: '12px' }}>
+              {[['sentence', 'Sentence case'], ['title', 'Title Case'], ['upper', 'UPPERCASE'], ['lower', 'lowercase'], ['camel', 'camelCase'], ['pascal', 'PascalCase'], ['snake', 'snake_case'], ['kebab', 'kebab-case']].map(([id, label]) => (
+                <button key={id} className={`case-button ${mode === id ? 'selected' : ''}`} onClick={() => { setMode(id); setOutput(toCase(input, id)) }}>{label}</button>
+              ))}
+            </div>
+            <ActionButton variant="primary" onClick={() => setOutput(toCase(input, mode))}><Type size={15} />Convert text</ActionButton>
+          </section>
+          <section className="panel">
+            <div className="panel-top">
+              <div><h3>Converted text</h3><p>Choose a format, then copy your result.</p></div>
+              {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output} /></div>}
+            </div>
+            {output ? <pre className="result-text">{output}</pre> : <EmptyState text="Your converted text will appear here." />}
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'pdf' && (
+        <div className="workspace-grid">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <div className="panel-top" style={{ marginTop: '10px' }}><div><h3>PDF & Document Tools</h3><p>Extracted document text appears below.</p></div><FileText size={19} /></div>
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="tip-box" style={{ marginTop: '12px' }}><ShieldCheck size={17} /><span>Your document is processed on this device and is not uploaded to a server.</span></div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Extracted text</h3><p>Review or edit the extracted text before cleaning.</p></div>{input && <CopyButton value={input} />}</div>
+            <textarea className="pdf-textarea" value={input} onChange={e => setInput(e.target.value)} placeholder="Extracted document text will appear here..." rows={12} />
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton></div>
+          </section>
+          <section className="panel full-width">
+            <div className="panel-top">
+              <div><h3>Cleaned text</h3><p>Removes common line-break artifacts and joins wrapped paragraphs.</p></div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {output && <DownloadDropdown content={output} toolId={tool.id} />}
+                <ActionButton variant="primary" onClick={() => setOutput(input.replace(/-\s*\n\s*/g, '').replace(/([^\n])\n([^\n])/g, '$1 $2').replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n'))} disabled={!input}><Sparkles size={15} />Clean line breaks</ActionButton>
+              </div>
+            </div>
+            {output ? <><pre className="result-text">{output}</pre><div className="inline-actions"><CopyButton value={output} /></div></> : <EmptyState text="Import a document, then clean the extracted text." />}
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'reading' && (
+        <div className="workspace-grid">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} />
+            <TextArea label="Paste your text or upload a book" value={input} onChange={setInput} placeholder="Paste an article, essay or upload your book..." rows={14} />
+            {fileName && <div className="file-chip" style={{ marginTop: '8px' }}><FileText size={14} /> {fileName}</div>}
+            <div className="inline-actions"><ActionButton onClick={() => { setInput(''); setFileName('') }}><Trash2 size={15} />Clear text</ActionButton></div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Time estimate</h3><p>Based on your text length.</p></div><Clock3 size={20} /></div>
+            <div className="reading-feature"><span>Estimated reading time</span><strong>{Math.floor(stats.words / 200)}<small> min</small> {Math.round((stats.words % 200) / 200 * 60)}<small> sec</small></strong><p>At an average pace of 200 words per minute.</p></div>
+            <div className="stats-grid">
+              <Stat label="Word count" value={stats.words.toLocaleString()} />
+              <Stat label="Slow · 150 wpm" value={`${Math.ceil(stats.words / 150)} min`} />
+              <Stat label="Average · 200 wpm" value={`${Math.ceil(stats.words / 200)} min`} />
+              <Stat label="Fast · 250 wpm" value={`${Math.ceil(stats.words / 250)} min`} />
+            </div>
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'social' && (
+        <div className="workspace-grid">
+          <section className="panel">
+            <TextArea label="Write your post" value={input} onChange={setInput} placeholder="Draft your social media post here..." rows={14} />
+            <div className="inline-actions"><ActionButton onClick={() => setInput('')}><Trash2 size={15} />Clear text</ActionButton><CopyButton value={input} /></div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Platform check</h3><p>Select a platform to check your character count.</p></div><Settings2 size={19} /></div>
+            <label className="field-wrap"><span className="field-label">Platform</span><select value={platform} onChange={e => setPlatform(e.target.value)}>{Object.keys(limits).map(p => <option key={p}>{p}</option>)}</select></label>
+            <div className="limit-card">
+              <div className="limit-head"><span>Characters used</span><strong>{stats.chars.toLocaleString()} / {limits[platform].toLocaleString()}</strong></div>
+              <div className="progress-track"><div className={`progress-fill ${stats.chars > limits[platform] ? 'over' : ''}`} style={{ width: `${Math.min(100, stats.chars / limits[platform] * 100)}%` }} /></div>
+              <p className={stats.chars > limits[platform] ? 'over-text' : ''}>{stats.chars > limits[platform] ? `${(stats.chars - limits[platform]).toLocaleString()} characters over the selected limit.` : `${(limits[platform] - stats.chars).toLocaleString()} characters remaining.`}</p>
+            </div>
+            <div className="tip-box"><ShieldCheck size={17} /><span>These are general text-length limits. Platform rules and counting methods can change.</span></div>
+          </section>
+        </div>
+      )}
+
+      {tool.id === 'html-to-markdown' && (
+        <div className="workspace-grid two-col">
+          <section className="panel">
+            <DocumentImportBox onTextLoaded={handleDocumentImport} defaultFormat="html" allowedFormats={['html', 'txt']} />
+            <TextArea label="HTML input" value={input} onChange={setInput} placeholder="Paste HTML or rich text here..." rows={13} />
+            <div className="inline-actions">
+              <ActionButton onClick={() => setInput(SAMPLE_HTML)}><Sparkles size={15} />Load sample</ActionButton>
+              <ActionButton onClick={() => setInput('')}><Trash2 size={15} />Clear text</ActionButton>
+            </div>
+          </section>
+          <section className="panel">
+            <div className="panel-top"><div><h3>Markdown options</h3><p>Customize formatting before converting.</p></div><FileCode2 size={19} /></div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
+              <label className="field-wrap" style={{ marginBottom: 0 }}>
+                <span className="field-label">Heading style</span>
+                <select value={mdOptions.headingStyle} onChange={e => setMdOptions(o => ({ ...o, headingStyle: e.target.value }))}>
+                  <option value="atx">ATX (# ##)</option>
+                  <option value="setext">Setext (=== ---)</option>
+                </select>
+              </label>
+              <label className="field-wrap" style={{ marginBottom: 0 }}>
+                <span className="field-label">Bullet list marker</span>
+                <select value={mdOptions.bulletListMarker} onChange={e => setMdOptions(o => ({ ...o, bulletListMarker: e.target.value }))}>
+                  <option value="-">-</option>
+                  <option value="*">*</option>
+                  <option value="+">+</option>
+                </select>
+              </label>
+              <label className="field-wrap" style={{ marginBottom: 0 }}>
+                <span className="field-label">Code block style</span>
+                <select value={mdOptions.codeBlockStyle} onChange={e => setMdOptions(o => ({ ...o, codeBlockStyle: e.target.value }))}>
+                  <option value="fenced">Fenced (```)</option>
+                  <option value="indented">Indented</option>
+                </select>
+              </label>
+              <label className="check-row">
+                <input type="checkbox" checked={mdOptions.stripScriptsAndStyles} onChange={e => setMdOptions(o => ({ ...o, stripScriptsAndStyles: e.target.checked }))} />
+                <span>Strip script, style, noscript &amp; iframe tags</span>
+              </label>
+            </div>
+            <ActionButton variant="primary" onClick={runHtmlToMarkdown}><FileCode2 size={15} />Convert to Markdown</ActionButton>
+          </section>
+          <section className="panel full-width">
+            <div className="panel-top">
+              <div><h3>Markdown result</h3><p>{output ? `${countStats(output).words} words · ${output.length} characters` : 'Your converted Markdown will appear here.'}</p></div>
+              {output && <div style={{ display: 'flex', gap: '8px' }}><DownloadDropdown content={output} toolId={tool.id} /><CopyButton value={output} /></div>}
+            </div>
+            {output ? <pre className="result-text">{output}</pre> : <EmptyState text="Your converted Markdown will appear here."/>}
+          </section>
+        </div>
+      )}
+
+      {/* RICH SEO EDITORIAL CONTENT SECTION (300-600 words per tool) */}
+      <section style={{ marginTop: '50px', padding: '32px', background: 'var(--surface-2)', borderRadius: '16px', border: '1px solid var(--line)', lineHeight: '1.8' }}>
+        <h2 style={{ fontSize: '20px', color: 'var(--text)', marginBottom: '12px' }}>About {tool.name}</h2>
+        <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '24px' }}>{tool.explanation}</p>
+
+        <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>How to Use {tool.name}</h3>
+        <ol style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
+          {tool.howToSteps.map((step, idx) => (
+            <li key={idx} style={{ marginBottom: '8px' }}>{step}</li>
+          ))}
+        </ol>
+
+        <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Real-World Use Cases & Examples</h3>
+        <ul style={{ paddingLeft: '20px', marginBottom: '24px', color: 'var(--muted)', fontSize: '13px' }}>
+          {tool.examples.map((ex, idx) => (
+            <li key={idx} style={{ marginBottom: '8px' }}>{ex}</li>
+          ))}
+        </ul>
+
+        {tool.faqs && tool.faqs.length > 0 && (
+          <>
+            <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '12px' }}>Frequently Asked Questions</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
+              {tool.faqs.map((faq, index) => (
+                <div key={index} style={{ borderBottom: index < tool.faqs.length - 1 ? '1px solid var(--line)' : 'none', paddingBottom: index < tool.faqs.length - 1 ? '12px' : '0' }}>
+                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--text)', marginBottom: '4px' }}>{faq.q}</strong>
+                  <p style={{ fontSize: '12px', color: 'var(--muted)', margin: 0, lineHeight: '1.6' }}>{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {tool.relatedBlogs && tool.relatedBlogs.length > 0 && (
+          <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
+            <h3 style={{ fontSize: '14px', color: 'var(--text)', marginBottom: '10px' }}>Related Articles & Guides</h3>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {tool.relatedBlogs.map((blog) => (
+                <button
+                  key={blog.slug}
+                  onClick={() => onNavigate(`/blog/${blog.slug}`)}
+                  className="button"
+                  style={{ fontSize: '11px', padding: '8px 12px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <BookOpen size="{13}"/> {blog.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      <AdContainer/>
+    </div>
+  )
 }
 
 export default function App() {
@@ -1160,6 +1366,8 @@ export default function App() {
     `${tool.name} ${tool.description}`.toLowerCase().includes(query.toLowerCase())
   )
 
+  const formattedToolCount = String(tools.length).padStart(2, '0')
+
   return (
     <div className="app-shell" data-theme={theme}>
       <aside className="sidebar">
@@ -1173,7 +1381,7 @@ export default function App() {
         <button className={`nav-item ${isBlogIndex || isBlogPost ? 'active' : ''}`} onClick={() => navigate('/blog')}>
           <BookOpen size={17}/>Blog
         </button>
-        <div className="side-label tools-label">YOUR TOOLS <span>08</span></div>
+        <div className="side-label tools-label">YOUR TOOLS <span>{formattedToolCount}</span></div>
         <nav className="tool-nav">
           {tools.map(tool => {
             const Icon = tool.icon
@@ -1238,7 +1446,7 @@ export default function App() {
               <div>
                 <div className="eyebrow">YOUR PERSONAL TEXT WORKSPACE</div>
                 <h1>Make text work <span>better.</span></h1>
-                <p>Eight simple tools to clean, compare, count and shape your words.<br/>No clutter. No sign-up. Just get things done.</p>
+                <p>Nine simple tools to clean, compare, count and shape your words.<br/>No clutter. No sign-up. Just get things done.</p>
               </div>
               <div className="welcome-art">
                 <div className="art-card art-one"><AlignLeft size={20}/><span>Clean text</span><i>•••</i></div>
@@ -1255,7 +1463,7 @@ export default function App() {
                 <p>Pick a tool and get straight to work.</p>
               </div>
               <div className="tool-count">
-                <strong>08</strong>
+                <strong>{formattedToolCount}</strong>
                 <span>TOOLS AVAILABLE</span>
               </div>
             </div>
@@ -1267,7 +1475,7 @@ export default function App() {
                 {query && <button onClick={() => setQuery('')}><X size={15}/></button>}
               </div>
               <div className="category-scroll">
-                {['All tools', 'Compare', 'Clean', 'Analyze', 'Organize', 'Format', 'PDF', 'Social'].map(c => (
+                {['All tools', 'Compare', 'Clean', 'Analyze', 'Organize', 'Format', 'PDF', 'Social', 'Markdown'].map(c => (
                   <button key={c} className={`filter-chip ${category === c ? 'selected' : ''}`} onClick={() => setCategory(c)}>{c}</button>
                 ))}
               </div>

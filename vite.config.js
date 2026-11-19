@@ -17,6 +17,7 @@ export default defineConfig({
         '/reading-time-calculator',
         '/pdf-line-break-cleaner',
         '/social-media-character-counter',
+        '/html-to-markdown',
         '/blog',
         '/blog/architecture-of-client-side-text-utilities',
         '/blog/mastering-manuscript-metrics-and-pacing',
