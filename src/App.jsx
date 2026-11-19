@@ -521,14 +521,15 @@ function DownloadDropdown({ content, toolId }) {
         printWindow.document.write(`
           <html>
             <head>
-              <title></title>
+              <title>Wordflow Result</title>
               <style>
-                @page { margin: 20mm; }
-                body { font-family: Arial, sans-serif; margin: 0; color: #111; line-height: 1.6; }
-                pre { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; font-size: 14px; margin: 0; }
+                body { font-family: Arial, sans-serif; padding: 40px; color: #111; line-height: 1.6; }
+                pre { white-space: pre-wrap; font-family: inherit; font-size: 14px; }
               </style>
             </head>
             <body>
+              <h2>Wordflow Export Result</h2>
+              <hr style="border:0; border-top:1px solid #ccc; margin-bottom:20px;"/>
               <pre>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
             </body>
           </html>
@@ -557,7 +558,7 @@ function DownloadDropdown({ content, toolId }) {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `result.${ext}`
+    a.download = `wordflow-result.${ext}`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -565,7 +566,7 @@ function DownloadDropdown({ content, toolId }) {
   return (
     <div style={{ position: 'relative', display: 'inline-block' }}>
       <ActionButton onClick={() => setOpen(!open)}>
-        <Download size={15} /> Download Result <ChevronDown size={13} />
+        <Download size={15}/> Download Result <ChevronDown size={13}/>
       </ActionButton>
       {open && (
         <div className="dropdown-menu" style={{
@@ -575,16 +576,16 @@ function DownloadDropdown({ content, toolId }) {
           <button onClick={() => downloadFile('txt')} style={menuItemStyle}>Text Document (.txt)</button>
           <button onClick={() => downloadFile('pdf')} style={menuItemStyle}>PDF Document (.pdf)</button>
           <button onClick={() => downloadFile('doc')} style={menuItemStyle}>Word Document (.doc)</button>
-          <button
-            onClick={() => isTabularData && downloadFile('excel')}
-            disabled={!isTabularData}
+          <button 
+            onClick={() => isTabularData && downloadFile('excel')} 
+            disabled={!isTabularData} 
             style={{
               ...menuItemStyle,
               color: isTabularData ? 'var(--text)' : 'var(--muted)',
               opacity: isTabularData ? 1 : 0.4,
               cursor: isTabularData ? 'pointer' : 'not-allowed',
             }}
-            title={isTabularData ? 'Download as Spreadsheet' : 'Excel export available only for list/tabular data'}
+            title={isTabularData ? "Download as Spreadsheet" : "Excel export available only for list/tabular data"}
           >
             Excel / Spreadsheet (.csv)
           </button>
@@ -1413,6 +1414,16 @@ export default function App() {
             <strong>{currentPath === '/about' ? 'About' : currentPath === '/privacy-policy' ? 'Privacy Policy' : currentPath === '/terms-of-use' ? 'Terms of Use' : isBlogIndex ? 'Blog' : isBlogPost ? 'Article' : selectedTool?.name || 'Overview'}</strong>
           </div>
           <div className="top-actions">
+            <a 
+              href="https://rapidapi.com/AjayJaknale/api/wordflow-text-markdown-api1" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="coffee-button"
+              aria-label="Wordflow API on RapidAPI"
+            >
+              <Code2 size={14}/>
+              <span>API</span>
+            </a>
             <a 
               href="https://ko-fi.com/studiolineco" 
               target="_blank" 
